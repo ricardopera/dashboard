@@ -25,12 +25,17 @@ body {
   display: flex;
   background: var(--bg-color);
   color: var(--font-color);
+  justify-content: space-between;
+  margin: 5px;
 }
 
 
 .faixa-ano {
-  display: flex;
+  /* position: sticky; */
+  padding: 1px;
+  display: block;
   flex-direction: row;
+  /* vertical-align: center; */
   justify-content: center;
   align-items: center;
   top: 0;
@@ -40,12 +45,23 @@ body {
   background: var(--bg-color);
   z-index:1000;
   color: var(--font-color);
+  /* display:flex; */
+  justify-content:space-between;
+  
 }
 
 .chart {
   flex: 1;
   width: 50%;
   height: 100%;
+  border-style: groove;
+  border-width: 1px;
+  border-color: lightblue;
+  border-radius: 10px;
+  /* margin: 0 auto; */
+  justify-content: space-between;
+  flex: 1;
+  margin: 5px;
 }
 
 h1, h2, h3, h4 {
