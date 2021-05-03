@@ -64,6 +64,20 @@ body {
   margin: 5px;
 }
 
+.chart2 {
+  /* flex: 1; */
+  width: 35%;
+  height: 100%;
+  border-style: groove;
+  border-width: 1px;
+  border-color: lightblue;
+  border-radius: 10px;
+  /* margin: 0 auto; */
+  justify-content: space-between;
+  /* flex: 1; */
+  margin: 5px;
+}
+
 h1, h2, h3, h4 {
   background: var(--bg-color);
   color: var(--font-color);
