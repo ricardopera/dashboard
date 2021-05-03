@@ -2,8 +2,9 @@
   --primary-color: #302AE6;
   --secondary-color: #536390;
   --font-color: #424242;
-  --bg-color: #fff;
+  --bg-color: #f4f4f7;
   --heading-color: #292922;
+  --chart-bg-color: #f3f3fa;
 }
 
 [data-theme="dark"] {
@@ -15,6 +16,7 @@
   /* --bg-color: #21313C; */
   /* --bg-color: #161625; */
   --heading-color: #818cab;
+  --chart-bg-color: #20212b;
 }
 
 body {
@@ -62,6 +64,7 @@ body {
   justify-content: space-between;
   flex: 1;
   margin: 5px;
+  background: var(--chart-bg-color);
 }
 
 .chart2 {
@@ -76,6 +79,7 @@ body {
   justify-content: space-between;
   /* flex: 1; */
   margin: 5px;
+  background: var(--chart-bg-color);
 }
 
 h1, h2, h3, h4 {
