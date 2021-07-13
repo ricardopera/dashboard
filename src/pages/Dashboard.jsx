@@ -7,7 +7,7 @@ import { useIntl } from 'react-intl';
 
 var tema = "light";
 
-var filter = null;
+// var filter = null;
 
 export var options_filters = [{ label: 'Ovo', value: 'Ovo' }, { label: 'Jaca', value: 'Jaca' }];
 
@@ -145,6 +145,11 @@ export default function Dashboard({
     const refChartPizzaDoencas = useRef(null);
     const refChartPizzaDoencasCirurgia = useRef(null);
     const [dk, setDk] = useState(dark);
+    const [filter, setFilter] = useState({});
+    const [filterAno, setFilterAno] = useState({});
+    const [filterTribunal, setFilterTribunal] = useState({});
+    const [filterCid, setFilterCid] = useState({});
+    const [filterMed, setFilterMed] = useState({});
     const anos = [
         {
             value: "",
@@ -241,6 +246,8 @@ export default function Dashboard({
             label: "JFSC"
         }
     ];
+    const tipoSolicitacoes = [];
+    const procuradores= [];
     // Similar a componentDidMount e componentDidUpdate:
     useEffect(() => {
         if (dark !== dk) {
@@ -654,57 +661,129 @@ export default function Dashboard({
     );
 
     const handleChangeTribunais = selectObject => {
-        let query = [];
+        var query = [];
+        var f = {};
+        console.log('filtro ano: ', filterAno);
+        selectObject.forEach(function ({ value, index, array }) {
+            console.log(value);
+            query.push({"tribunal": value});
+        });
+        if (query.length > 0){
+            setFilterTribunal({$or: query});
+        }
+        else {
+            setFilterTribunal({});
+        }
+        if (query.length > 0) {
+            f = {$and :[ filterAno, {$or: query}]};
+        }
+        else {
+            f = {...filterAno};
+        }
+        console.log("Filtro: ", f);
+
+        chart1.setFilter(f);
+        chartMed.setFilter(f);
+        chart2.setFilter(f);
+        chartQuantidade.setFilter(f);
+        chartValor.setFilter(f);
+        chart3.setFilter(f);
+        chart4.setFilter(f);
+        chart7.setFilter(f);
+        chart8.setFilter(f);
+        chartTabelaCID.setFilter(f);
+        chartTabelaTipos.setFilter(f);
+        // chartTabelaAno.setFilter(f);
+        chartPizzaMedicamentos.setFilter(f);
+        chartPizzaDoencas.setFilter(f);
+        chartPizzaDoencasCirurgia.setFilter(f);  
     };
+
 
     const handleChangeAnos = selectObject => {
         // const ano = selectObject[0].value;
         // const dat = new Date(2008, 1, 1);
-        let query = [];
+        var query = [];
+        var f = {};
+        console.log('filtro tribunal: ', filterTribunal);
         selectObject.forEach(function ({ value, index, array }) {
-            console.log(value.value);
             console.log(value);
             query.push({ "data_distribuicao": { $gte: new Date(`${value}-01-01T00:00:00.000Z`), $lte: new Date(`${value}-12-31T00:00:00.000Z`) } })
         });
-        console.log(query);
+        if (query.length > 0){
+            setFilterAno({$or: query});
+        }
+        else {
+            setFilterAno({});
+        }
+        if (query.length > 0) {
+            f = {$and : [filterTribunal, {$or: query}]};
+        }
+        else {
+            f = {...filterTribunal};
+        }
+        console.log("Filtro: ", f);
 
-        filter = {};
-        // console.log(JSON.stringify(ano));
-        query.length > 0 ? chart1.setFilter({ $or: query })
-            : chart1.setFilter({});
-        query.length > 0 ? chartMed.setFilter({ $or: query })
-            : chartMed.setFilter({});
-        query.length > 0 ? chart2.setFilter({ $or: query })
-            : chart2.setFilter({});
-        // ano ? chart2.setFilter({ "data_distribuicao": { $gte: new Date(`${ano}-01-01T00:00:00.000Z`), $lte: new Date(`${ano}-12-31T00:00:00.000Z`) } })
+        chart1.setFilter(f);
+        chartMed.setFilter(f);
+        chart2.setFilter(f);
+        chartQuantidade.setFilter(f);
+        chartValor.setFilter(f);
+        chart3.setFilter(f);
+        chart4.setFilter(f);
+        chart7.setFilter(f);
+        chart8.setFilter(f);
+        chartTabelaCID.setFilter(f);
+        chartTabelaTipos.setFilter(f);
+        // chartTabelaAno.setFilter(f);
+        chartPizzaMedicamentos.setFilter(f);
+        chartPizzaDoencas.setFilter(f);
+        chartPizzaDoencasCirurgia.setFilter(f);
+
+        
+        // // filter = {};
+        // // console.log(JSON.stringify(ano));
+        // // query.length > 0 ? chart1.setFilter({ $or: query })
+        // //     : chart1.setFilter({});
+        // query.length > 0 ? chartMed.setFilter({ $or: query })
+        //     : chartMed.setFilter({});
+        // query.length > 0 ? chart2.setFilter({ $or: query })
         //     : chart2.setFilter({});
-        query.length > 0 ? chartQuantidade.setFilter({ $or: query })
-            : chartQuantidade.setFilter({});
-        query.length > 0 ? chartValor.setFilter({ $or: query })
-            : chartValor.setFilter({});
-        query.length > 0 ? chart3.setFilter({ $or: query })
-            : chart3.setFilter({});
-        query.length > 0 ? chart4.setFilter({ $or: query })
-            : chart4.setFilter({});
-        query.length > 0 ? chartTabelaCID.setFilter({ $or: query })
-            : chart3.setFilter({});
-        query.length > 0 ? chart4.setFilter({ $or: query })
-            : chart4.setFilter({});
-        query.length > 0 ? chartPizzaMedicamentos.setFilter({ $or: query })
-            : chartPizzaMedicamentos.setFilter({});
-        query.length > 0 ? chartPizzaDoencas.setFilter({ $or: query })
-            : chartPizzaDoencas.setFilter({});
-        query.length > 0 ? chart7.setFilter({ $or: query })
-            : chart7.setFilter({});
-        query.length > 0 ? chart8.setFilter({ $or: query })
-            : chart8.setFilter({});
-        var texto = '';
-        // ano
-        //     ? texto = `processos de ${ano}`
-        //     : texto = `todos os processos`;
-        // document.getElementById("filterMessage").innerText = texto;
-        // options_filters = [{ label: ano, value: ano }, { label: 'Acerola', value: 'Acerola' }];
-        // document.getElementsByClassName("basic-multi-select")[0].setAttribute("value", [{ label: ano, value: ano }]);
+        // // ano ? chart2.setFilter({ "data_distribuicao": { $gte: new Date(`${ano}-01-01T00:00:00.000Z`), $lte: new Date(`${ano}-12-31T00:00:00.000Z`) } })
+        // //     : chart2.setFilter({});
+        // query.length > 0 ? chartQuantidade.setFilter({ $or: query })
+        //     : chartQuantidade.setFilter({});
+        // query.length > 0 ? chartValor.setFilter({ $or: query })
+        //     : chartValor.setFilter({});
+        // query.length > 0 ? chart3.setFilter({ $or: query })
+        //     : chart3.setFilter({});
+        // query.length > 0 ? chart4.setFilter({ $or: query })
+        //     : chart4.setFilter({});
+        // query.length > 0 ? chartTabelaCID.setFilter({ $or: query })
+        //     : chart3.setFilter({});
+        // query.length > 0 ? chart4.setFilter({ $or: query })
+        //     : chart4.setFilter({});
+        // query.length > 0 ? chartPizzaMedicamentos.setFilter({ $or: query })
+        //     : chartPizzaMedicamentos.setFilter({});
+        // query.length > 0 ? chartPizzaDoencas.setFilter({ $or: query })
+        //     : chartPizzaDoencas.setFilter({});
+        // query.length > 0 ? chart7.setFilter({ $or: query })
+        //     : chart7.setFilter({});
+        // query.length > 0 ? chart8.setFilter({ $or: query })
+        //     : chart8.setFilter({});
+        // var texto = '';
+        // // ano
+        // //     ? texto = `processos de ${ano}`
+        // //     : texto = `todos os processos`;
+        // // document.getElementById("filterMessage").innerText = texto;
+        // // options_filters = [{ label: ano, value: ano }, { label: 'Acerola', value: 'Acerola' }];
+        // // document.getElementsByClassName("basic-multi-select")[0].setAttribute("value", [{ label: ano, value: ano }]);
+    };
+    const handleChangeTipoSolicitacao = selectObject => {
+        let query = [];
+    };
+    const handleChangeProcurador = selectObject => {
+        let query = [];
     };
     // const refBarChart = useRef(null);
     // const refGeoChart = useRef(null);
@@ -886,7 +965,7 @@ export default function Dashboard({
                                             isMulti
                                             placeholder="Selecione o ano"
                                             options={anos}
-                                            onChange={handleChangeAnos}
+                                            onChange={handleChangeTipoSolicitacao}
                                     />
                                 </div>
                             </div>
@@ -897,7 +976,7 @@ export default function Dashboard({
                                             isMulti
                                             placeholder="Selecione o tribunal"
                                             options={tribunais}
-                                            onChange={handleChangeTribunais}
+                                            onChange={handleChangeProcurador}
                                     />
                                 </div>    
                             </div>
