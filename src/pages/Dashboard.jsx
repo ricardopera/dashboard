@@ -111,13 +111,6 @@ export const chartPizzaDoencasCirurgia = sdk.createChart({
     background: "transparent"
 });
 
-// const barChart = sdk.createChart({
-//     chartId: "ff518bbb-923c-4c2c-91f5-4a2b3137f312", // Optional: ~REPLACE~ with the Chart ID from your Embed Chart dialog
-// });
-// const geoChart = sdk.createChart({
-//     chartId: "b1983061-ee44-40ad-9c45-4bb1d4e74884", // Optional: ~REPLACE~ with the Chart ID from your Embed Chart dialog
-// });
-
 export default function Dashboard({
     scroll,
     dark,
@@ -148,6 +141,8 @@ export default function Dashboard({
     const [filter, setFilter] = useState({});
     const [filterAno, setFilterAno] = useState({});
     const [filterTribunal, setFilterTribunal] = useState({});
+    const [filterTipoSolicitacao, setFilterTipoSolicitacao] = useState({});
+    const [filterProcurador, setFilterProcurador] = useState({});
     const [filterCid, setFilterCid] = useState({});
     const [filterMed, setFilterMed] = useState({});
     const anos = [
@@ -246,8 +241,45 @@ export default function Dashboard({
             label: "JFSC"
         }
     ];
-    const tipoSolicitacoes = [];
-    const procuradores= [];
+    const tipoSolicitacoes = [
+        {
+            value: "Alimentação especial",
+            label: "Alimentação especial"
+        },
+        {
+            value: "Cirurgia",
+            label: "Cirurgia"
+        },
+        {
+            value: "Classe de medicamentos variados",
+            label: "Classe de medicamentos variados"
+        },
+        {
+            value: "Câmara hiperbárica",
+            label: "Câmara hiperbárica"
+        },
+        {
+            value: "Exame",
+            label: "Exame"
+        },
+        {
+            value: "Fisioterapia",
+            label: "Fisioterapia"
+        },
+        {
+            value: "Internação compulsória",
+            label: "Internação compulsória"
+        },
+        {
+            value: "Medicamento",
+            label: "Medicamento"
+        },
+        {
+            value: "Não determinado",
+            label: "Não determinado"
+        }
+    ];
+    const procuradores = [];
     // Similar a componentDidMount e componentDidUpdate:
     useEffect(() => {
         if (dark !== dk) {
@@ -272,14 +304,6 @@ export default function Dashboard({
             chart7.setTheme(dark ? "dark" : "light");
             chart8.setTheme(dark ? "dark" : "light");
         }
-        // else{
-        //     console.log(dark);
-        //     console.log(dk);
-        //     console.log("dark2")
-        //     chart1.setTheme(dark ? "dark": "light");
-        //     chartMed.setTheme(dark ? "dark": "light");
-        // }
-
         // Atualiza o título do documento utilizando a API do navegador
         //   document.title = `You clicked ${count} times`;
     });
@@ -666,19 +690,19 @@ export default function Dashboard({
         console.log('filtro ano: ', filterAno);
         selectObject.forEach(function ({ value, index, array }) {
             console.log(value);
-            query.push({"tribunal": value});
+            query.push({ "tribunal": value });
         });
-        if (query.length > 0){
-            setFilterTribunal({$or: query});
+        if (query.length > 0) {
+            setFilterTribunal({ $or: query });
         }
         else {
             setFilterTribunal({});
         }
         if (query.length > 0) {
-            f = {$and :[ filterAno, {$or: query}]};
+            f = { $and: [filterAno, filterTipoSolicitacao, { $or: query }] };
         }
         else {
-            f = {...filterAno};
+            f = { ...filterAno, ...filterTipoSolicitacao };
         }
         console.log("Filtro: ", f);
 
@@ -693,12 +717,11 @@ export default function Dashboard({
         chart8.setFilter(f);
         chartTabelaCID.setFilter(f);
         chartTabelaTipos.setFilter(f);
-        // chartTabelaAno.setFilter(f);
+        chartTabelaAno.setFilter(f);
         chartPizzaMedicamentos.setFilter(f);
         chartPizzaDoencas.setFilter(f);
-        chartPizzaDoencasCirurgia.setFilter(f);  
+        chartPizzaDoencasCirurgia.setFilter(f);
     };
-
 
     const handleChangeAnos = selectObject => {
         // const ano = selectObject[0].value;
@@ -710,17 +733,17 @@ export default function Dashboard({
             console.log(value);
             query.push({ "data_distribuicao": { $gte: new Date(`${value}-01-01T00:00:00.000Z`), $lte: new Date(`${value}-12-31T00:00:00.000Z`) } })
         });
-        if (query.length > 0){
-            setFilterAno({$or: query});
+        if (query.length > 0) {
+            setFilterAno({ $or: query });
         }
         else {
             setFilterAno({});
         }
         if (query.length > 0) {
-            f = {$and : [filterTribunal, {$or: query}]};
+            f = { $and: [filterTribunal, filterTipoSolicitacao, { $or: query }] };
         }
         else {
-            f = {...filterTribunal};
+            f = { ...filterTribunal, ...filterTipoSolicitacao };
         }
         console.log("Filtro: ", f);
 
@@ -735,172 +758,54 @@ export default function Dashboard({
         chart8.setFilter(f);
         chartTabelaCID.setFilter(f);
         chartTabelaTipos.setFilter(f);
-        // chartTabelaAno.setFilter(f);
+        chartTabelaAno.setFilter(f);
         chartPizzaMedicamentos.setFilter(f);
         chartPizzaDoencas.setFilter(f);
         chartPizzaDoencasCirurgia.setFilter(f);
+    };
 
-        
-        // // filter = {};
-        // // console.log(JSON.stringify(ano));
-        // // query.length > 0 ? chart1.setFilter({ $or: query })
-        // //     : chart1.setFilter({});
-        // query.length > 0 ? chartMed.setFilter({ $or: query })
-        //     : chartMed.setFilter({});
-        // query.length > 0 ? chart2.setFilter({ $or: query })
-        //     : chart2.setFilter({});
-        // // ano ? chart2.setFilter({ "data_distribuicao": { $gte: new Date(`${ano}-01-01T00:00:00.000Z`), $lte: new Date(`${ano}-12-31T00:00:00.000Z`) } })
-        // //     : chart2.setFilter({});
-        // query.length > 0 ? chartQuantidade.setFilter({ $or: query })
-        //     : chartQuantidade.setFilter({});
-        // query.length > 0 ? chartValor.setFilter({ $or: query })
-        //     : chartValor.setFilter({});
-        // query.length > 0 ? chart3.setFilter({ $or: query })
-        //     : chart3.setFilter({});
-        // query.length > 0 ? chart4.setFilter({ $or: query })
-        //     : chart4.setFilter({});
-        // query.length > 0 ? chartTabelaCID.setFilter({ $or: query })
-        //     : chart3.setFilter({});
-        // query.length > 0 ? chart4.setFilter({ $or: query })
-        //     : chart4.setFilter({});
-        // query.length > 0 ? chartPizzaMedicamentos.setFilter({ $or: query })
-        //     : chartPizzaMedicamentos.setFilter({});
-        // query.length > 0 ? chartPizzaDoencas.setFilter({ $or: query })
-        //     : chartPizzaDoencas.setFilter({});
-        // query.length > 0 ? chart7.setFilter({ $or: query })
-        //     : chart7.setFilter({});
-        // query.length > 0 ? chart8.setFilter({ $or: query })
-        //     : chart8.setFilter({});
-        // var texto = '';
-        // // ano
-        // //     ? texto = `processos de ${ano}`
-        // //     : texto = `todos os processos`;
-        // // document.getElementById("filterMessage").innerText = texto;
-        // // options_filters = [{ label: ano, value: ano }, { label: 'Acerola', value: 'Acerola' }];
-        // // document.getElementsByClassName("basic-multi-select")[0].setAttribute("value", [{ label: ano, value: ano }]);
-    };
     const handleChangeTipoSolicitacao = selectObject => {
-        let query = [];
+        var query = [];
+        var f = {};
+        console.log('filtros ano: ', filterAno, filterTribunal);
+        selectObject.forEach(function ({ value, index, array }) {
+            console.log(value);
+            query.push({ "tipo_pedido": value });
+        });
+        if (query.length > 0) {
+            setFilterTipoSolicitacao({ $or: query });
+        }
+        else {
+            setFilterTipoSolicitacao({});
+        }
+        if (query.length > 0) {
+            f = { $and: [filterTribunal, filterAno, { $or: query }] };
+        }
+        else {
+            f = { ...filterAno, ...filterTribunal };
+        }
+        console.log("Filtro: ", f);
+
+        chart1.setFilter(f);
+        chartMed.setFilter(f);
+        chart2.setFilter(f);
+        chartQuantidade.setFilter(f);
+        chartValor.setFilter(f);
+        chart3.setFilter(f);
+        chart4.setFilter(f);
+        chart7.setFilter(f);
+        chart8.setFilter(f);
+        chartTabelaCID.setFilter(f);
+        chartTabelaTipos.setFilter(f);
+        chartTabelaAno.setFilter(f);
+        chartPizzaMedicamentos.setFilter(f);
+        chartPizzaDoencas.setFilter(f);
+        chartPizzaDoencasCirurgia.setFilter(f);
     };
+
     const handleChangeProcurador = selectObject => {
         let query = [];
     };
-    // const refBarChart = useRef(null);
-    // const refGeoChart = useRef(null);
-    // const [year, setYear] = useState(lastOlympicsYear);
-    // const [playing, setPlaying] = useState(false);
-
-    // const yearRef = React.useRef(year);
-    // yearRef.current = year;
-
-    // const timerIdRef = React.useRef();
-    // const replayRef = React.useRef(false);
-
-    // const renderBarChart = useCallback(async (ref) => {
-    //     try {
-    //         await barChart.render(ref);
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // }, []);
-
-    // const renderGeoChart = useCallback(async (ref) => {
-    //     try {
-    //         await geoChart.render(ref);
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // }, []);
-
-    // const setRefBarChart = useCallback(
-    //     (ref) => {
-    //         if (ref) {
-    //             renderBarChart(ref);
-    //         }
-    //         // Save a reference to the node
-    //         refBarChart.current = ref;
-    //     },
-    //     [renderBarChart]
-    // );
-
-    // const setRefGeoChart = useCallback(
-    //     (ref) => {
-    //         if (ref) {
-    //             renderGeoChart(ref);
-    //         }
-    //         // Save a reference to the node
-    //         refGeoChart.current = ref;
-    //     },
-    //     [renderGeoChart]
-    // );
-
-    // const handleChange = (_event, newValue) => {
-    //     setYear(newValue);
-    // };
-
-    // const handleChangeCommitted = (_event, newValue) => {
-    //     setYear(newValue);
-    //     getDataFromAllPreviousYears(newValue);
-    // };
-
-    // // This function is creating the filter that will be executed on the data.
-    // // If you wish to run this example on your data, change it to accomodate your idea or make sure you have a "Year" field in your data source
-    // const getDataFromAllPreviousYears = (endYear) => {
-    //     let filter = {
-    //         $and: [
-    //             { Year: { $gte: firstOlympicsYear } },
-    //             { Year: { $lte: endYear } },
-    //         ],
-    //     };
-
-    //     return Promise.all([
-    //         geoChart.setFilter(filter),
-    //         barChart.setFilter(filter),
-    //     ]);
-    // };
-
-    // const play = () => {
-    //     let currentYear = yearRef.current + 4;
-
-    //     if (currentYear > lastOlympicsYear) {
-    //         if (replayRef.current) {
-    //             currentYear = firstOlympicsYear;
-    //             replayRef.current = false;
-    //         } else {
-    //             clearInterval(timerIdRef.current);
-    //             setPlaying(false);
-    //             return;
-    //         }
-    //     }
-    //     getDataFromAllPreviousYears(currentYear);
-    //     setYear(currentYear);
-    // };
-
-    // const setTimelineInterval = () => {
-    //     if (playing) {
-    //         // we do this because the first play with setInterval is after the time specified
-    //         // and the first filter should be instantaneous
-    //         play();
-    //         timerIdRef.current = setInterval(play, timelineInterval);
-    //     } else {
-    //         clearInterval(timerIdRef.current);
-    //     }
-    // };
-
-    // const actionTimeline = () => {
-    //     if (yearRef.current === lastOlympicsYear) {
-    //         replayRef.current = true;
-    //     }
-
-    //     setPlaying(!playing);
-    // };
-
-    // useEffect(() => {
-    //     setTimelineInterval();
-    // }, [playing]);
-
-    // const buttonClass = `action-button ${playing ? "pause-button" : "play-button"
-    //     }`;
 
     return (
         <div className='divOne'>
@@ -910,105 +815,71 @@ export default function Dashboard({
             <header>
                 <h1>
                     <FaHeartbeat style={{ width: '50px', color: '#00b193' }} />
-                    {/* <img width={80} src={health} alt="react logo" /> {intl.formatMessage({ id: 'title' })} */}
                     {intl.formatMessage({ id: 'title' })}
                 </h1>
                 <h4>Processos de saúde em trâmite na procuradoria judicial do Município de Itajaí</h4>
-                {/* <p>{intl.formatMessage({ id: 'description' })}</p> */}
             </header>
-            {/* <div className="block">
-        <Switch
-        height={16}
-        width={30}
-        checkedIcon={false}
-        uncheckedIcon={false}
-        // onChange={handleImageChange}
-        // checked={image}
-        onColor="#219de9"
-        offColor="#bbbbbb"
-        />
-        <span> {intl.formatMessage({ id: 'image' })}</span>
-    </div> */}
             <div className="body-content2">
                 <header className="faixa-ano" id="faixa-ano" style={scroll ? { position: 'fixed' } : { position: '' }}>
-                    <div style={{display: 'flex', "border-top": "5px solid rgba(255,255,255,.0)"}}>
-                        <div style={{display: 'block', width: '100%', "border-left": "5px solid rgba(255,255,255,.0)", "border-right": "5px solid rgba(255,255,255,.0)"}}>
-                            <div style={{display: 'flex'}}>
-                                <h4 style={{width: '45%'}}>Ano de distribuição{' '}</h4>
-                                <div style={{width: '100%'}}>
+                    <div style={{ display: 'flex', "border-top": "5px solid rgba(255,255,255,.0)" }}>
+                        <div style={{ display: 'block', width: '100%', "border-left": "5px solid rgba(255,255,255,.0)", "border-right": "5px solid rgba(255,255,255,.0)" }}>
+                            <div style={{ display: 'flex' }}>
+                                <h4 style={{ width: '45%' }}>Ano de distribuição{' '}</h4>
+                                <div style={{ width: '100%' }}>
                                     <Select className="ano" id="filtro-ano"
-                                            isMulti
-                                            placeholder="Selecione o ano"
-                                            options={anos}
-                                            onChange={handleChangeAnos}
-                                            style={{"border-left": ""}}
+                                        isMulti
+                                        placeholder="Selecione o ano"
+                                        options={anos}
+                                        onChange={handleChangeAnos}
+                                        style={{ "border-left": "" }}
                                     />
                                 </div>
                             </div>
-                            <div style={{display: 'flex'}}>
-                                <h4 style={{width: '45%'}}>Tribunal{' '}</h4>
-                                <div style={{width: '100%'}}>
+                            <div style={{ display: 'flex' }}>
+                                <h4 style={{ width: '45%' }}>Tribunal{' '}</h4>
+                                <div style={{ width: '100%' }}>
                                     <Select className="ano" id="filtro-ano"
-                                            isMulti
-                                            placeholder="Selecione o tribunal"
-                                            options={tribunais}
-                                            onChange={handleChangeTribunais}
-                                    />
-                                </div>    
-                            </div>
-                        </div>
-                        <div style={{display: 'block', width: '100%', "border-left": "5px solid rgba(255,255,255,.0)", "border-right": "5px solid rgba(255,255,255,.0)"}}>
-                            <div style={{display: 'flex'}}>
-                                <h4 style={{width: '45%'}}>Tipo de solicitação{' '}</h4>
-                                <div style={{width: '100%'}}>
-                                    <Select className="ano" id="filtro-ano"
-                                            isMulti
-                                            placeholder="Selecione o ano"
-                                            options={anos}
-                                            onChange={handleChangeTipoSolicitacao}
+                                        isMulti
+                                        placeholder="Selecione o tribunal"
+                                        options={tribunais}
+                                        onChange={handleChangeTribunais}
                                     />
                                 </div>
                             </div>
-                            <div style={{display: 'flex'}}>
-                                <h4 style={{width: '45%'}}>Procurador{' '}</h4>
-                                <div style={{width: '100%'}}>
-                                    <Select className="ano" id="filtro-ano"
-                                            isMulti
-                                            placeholder="Selecione o tribunal"
-                                            options={tribunais}
-                                            onChange={handleChangeProcurador}
+                        </div>
+                        <div style={{ display: 'block', width: '100%', "border-left": "5px solid rgba(255,255,255,.0)", "border-right": "5px solid rgba(255,255,255,.0)" }}>
+                            <div style={{ display: 'flex' }}>
+                                <h4 style={{ width: '45%' }}>Tipo de solicitação{' '}</h4>
+                                <div style={{ width: '100%' }}>
+                                    <Select className="Selecione o tipo de solicitação" id="filtro-ano"
+                                        isMulti
+                                        placeholder="Selecione o ano"
+                                        options={tipoSolicitacoes}
+                                        onChange={handleChangeTipoSolicitacao}
                                     />
-                                </div>    
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex' }}>
+                                <h4 style={{ width: '45%' }}>Procurador{' '}</h4>
+                                <div style={{ width: '100%' }}>
+                                    <Select className="ano" id="filtro-ano"
+                                        isMulti
+                                        placeholder="Selecione o tribunal"
+                                        options={tribunais}
+                                        onChange={handleChangeProcurador}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        
+
                     </div>
-                        {/* <MultiSelect
-            handleDefaultf={handleDefaultf}
-            defaultf={defaultf}
-            // options_filters={defaultf}
-            /> */}
-                        {/* <Select className="basic-multi-select"
-            classNamePrefix="select"
-            value={defaultf}
-            isMulti
-            options={[{ label: 'Abacate', value: 'Abacate' },{ label: 'Uva', value: 'Uva'}]}
-            onChange={handleDefaultf}
-            defaultf={defaultf}
-            /> */}
-                        {/* <h4>Mostrando <span id="filterMessage" onChange={handleDefaultf(options_filters)}>todos os processos</span></h4> */}
-                        <h4>Mostrando <span id="filterMessage">todos os processos</span></h4>
-                    
+                    <h4>Mostrando <span id="filterMessage">todos os processos</span></h4>
+
                 </header>
             </div>
             <div className="body-content">
 
             </div>
-            {/* <h4>Mostrando <span id="filterMessage" onChange={handleDefaultf(options_filters)}>todos os processos</span></h4> */}
-            {/* <div className="body-content">
-        <div className="chart2" id="chart1"></div>
-        <div className="chart" id="chart2"></div>
-    </div> */}
             <div className="body-content">
                 <div className="chart" id="chart1" ref={setRefChart1}></div>
                 <div className="chart" id="chartMed" ref={setRefChartMed}></div>
@@ -1016,29 +887,23 @@ export default function Dashboard({
             <div className="body-content">
                 <div className="chart" id="chart2" ref={setRefChart2}></div>
             </div>
-            {/* <div className="body-content"> */}
             <br></br>
             <h4>QUANTIDADE E VALOR DOS PROCESSOS</h4>
             <br></br>
-            {/* </div> */}
             <div className="body-content">
                 <div className="chart" id="chartQuantidade" ref={setRefChartQuantidade}></div>
                 <div className="chart" id="chartValor" ref={setRefChartValor}></div>
             </div>
-
             <br></br>
             <h4>COMPETÊNCIA</h4>
             <br></br>
-            {/* </div> */}
             <div className="body-content">
                 <div className="chart" id="chart3" ref={setRefChart3}></div>
                 <div className="chart" id="chart4" ref={setRefChart4}></div>
             </div>
-            {/* <div className="body-content"> */}
             <br></br>
             <h4>TIPOS DE SOLICITAÇÕES</h4>
             <br></br>
-            {/* </div> */}
             <div className="body-content">
                 <div className="chart" id="chart8" ref={setRefChart8}></div>
                 <div className="chart" id="chart7" ref={setRefChart7}></div>
@@ -1059,7 +924,6 @@ export default function Dashboard({
             <h4>PROCESSOS DE CIRURGIA</h4>
             <br></br>
             <div className="body-content">
-                {/* <div className="chart" id="chartPizzaMedicamentos"></div> */}
                 <div className="chart" id="chartPizzaDoencasCirurgia" ref={setRefChartPizzaDoencasCirurgia}></div>
             </div>
             <footer>
@@ -1086,32 +950,5 @@ export default function Dashboard({
                 </div>
             </footer>
         </div>
-        //     <>
-        //         <header className="header">
-        //             <h1>Building timeline charts with Charts Embedding SDK (MongoDB)</h1>
-        //             {/* <button className={buttonClass} onClick={actionTimeline}></button> */}
-        //         </header>
-
-        //         {/* <div className="actions">
-        //             <div className="slider">
-        //                 <PrettySlider
-        //                     valueLabelDisplay="on"
-        //                     aria-label="pretto slider"
-        //                     min={firstOlympicsYear}
-        //                     max={lastOlympicsYear}
-        //                     step={4}
-        //                     onChangeCommitted={handleChangeCommitted}
-        //                     onChange={handleChange}
-        //                     value={year}
-        //                     defaultValue={lastOlympicsYear}
-        //                 />
-        //             </div>
-        //         </div> */}
-
-        //         <div className="charts">
-        //             <div id="chart1" ref={setRefChart1}></div>
-        //             <div id="chartMed" ref={setRefChartMed}></div>
-        //         </div>
-        //     </>
     );
 }
