@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.fa5dea99.chunk.css",
-    "main.js": "/static/js/main.64bfde92.chunk.js",
-    "main.js.map": "/static/js/main.64bfde92.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.da22b309.js",
-    "runtime-main.js.map": "/static/js/runtime-main.da22b309.js.map",
-    "static/js/2.a0333c75.chunk.js": "/static/js/2.a0333c75.chunk.js",
-    "static/js/2.a0333c75.chunk.js.map": "/static/js/2.a0333c75.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.fa5dea99.chunk.css.map": "/static/css/main.fa5dea99.chunk.css.map",
-    "static/js/2.a0333c75.chunk.js.LICENSE.txt": "/static/js/2.a0333c75.chunk.js.LICENSE.txt",
-    "static/media/bg1.6eea880b.jpg": "/static/media/bg1.6eea880b.jpg"
+    "main.css": "/dashboad/static/css/main.fa5dea99.chunk.css",
+    "main.js": "/dashboad/static/js/main.64bfde92.chunk.js",
+    "main.js.map": "/dashboad/static/js/main.64bfde92.chunk.js.map",
+    "runtime-main.js": "/dashboad/static/js/runtime-main.b51b4c69.js",
+    "runtime-main.js.map": "/dashboad/static/js/runtime-main.b51b4c69.js.map",
+    "static/js/2.55234034.chunk.js": "/dashboad/static/js/2.55234034.chunk.js",
+    "static/js/2.55234034.chunk.js.map": "/dashboad/static/js/2.55234034.chunk.js.map",
+    "index.html": "/dashboad/index.html",
+    "static/css/main.fa5dea99.chunk.css.map": "/dashboad/static/css/main.fa5dea99.chunk.css.map",
+    "static/js/2.55234034.chunk.js.LICENSE.txt": "/dashboad/static/js/2.55234034.chunk.js.LICENSE.txt",
+    "static/media/bg1.6eea880b.jpg": "/dashboad/static/media/bg1.6eea880b.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.da22b309.js",
-    "static/js/2.a0333c75.chunk.js",
+    "static/js/runtime-main.b51b4c69.js",
+    "static/js/2.55234034.chunk.js",
     "static/css/main.fa5dea99.chunk.css",
     "static/js/main.64bfde92.chunk.js"
   ]
