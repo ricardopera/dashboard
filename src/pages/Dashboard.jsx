@@ -325,13 +325,19 @@ export default function Dashboard({
     };
 
     const clickHandler = (payload) => {
-        // Optional: ~REPLACE~ this with a suitable filter if you're using your own chart
-        const ano = document.getElementById("filtro-ano").value;
-        // const filter = Object.assign({},payload.selectionFilter , { "data_distribuicao":{$gte: new Date(`${ano}-01-01T00:00:00.000Z`),$lte: new Date(`${ano}-12-31T00:00:00.000Z`)}});
-        var f = { ...filter, ...payload.selectionFilter };//, ...{ "data_distribuicao":{$gte: new Date(`${ano}-01-01T00:00:00.000Z`),$lte: new Date(`${ano}-12-31T00:00:00.000Z`)}}};
-        if (!f["data_distribuicao"] && ano) {
-            f = { ...f, ...{ "data_distribuicao": { $gte: new Date(`${ano}-01-01T00:00:00.000Z`), $lte: new Date(`${ano}-12-31T00:00:00.000Z`) } } };
-        }
+
+        setFilterCid({ ...payload.selectionFilter});
+        var f = { ...payload.selectionFilter, ...filterAno, ...filterTribunal, ...filterTipoSolicitacao, ...filterProcurador};
+
+        const ano = '';
+        // // Optional: ~REPLACE~ this with a suitable filter if you're using your own chart
+        // const ano = document.getElementById("filtro-ano").value;
+        // // const filter = Object.assign({},payload.selectionFilter , { "data_distribuicao":{$gte: new Date(`${ano}-01-01T00:00:00.000Z`),$lte: new Date(`${ano}-12-31T00:00:00.000Z`)}});
+        // var f = { ...filter, ...payload.selectionFilter };//, ...{ "data_distribuicao":{$gte: new Date(`${ano}-01-01T00:00:00.000Z`),$lte: new Date(`${ano}-12-31T00:00:00.000Z`)}}};
+        // if (!f["data_distribuicao"] && ano) {
+        //     f = { ...f, ...{ "data_distribuicao": { $gte: new Date(`${ano}-01-01T00:00:00.000Z`), $lte: new Date(`${ano}-12-31T00:00:00.000Z`) } } };
+        // }
+        console.log(payload.selectionFilter);
         console.log(f);
         var texto = '';
         chart2.setFilter(f);
@@ -339,7 +345,7 @@ export default function Dashboard({
         ano ? texto = `processos com o CID-10 ${JSON.stringify(payload.selectionFilter["cid.codigo"])}: ${JSON.stringify(payload.selectionFilter["cid.doenca"])} de ${ano}`
             : texto = `processos com o CID-10 ${JSON.stringify(payload.selectionFilter["cid.codigo"])}: ${JSON.stringify(payload.selectionFilter["cid.doenca"])}`
 
-        console.log(filter);
+        // console.log(filter);
         document.getElementById("filterMessage").innerText = texto;
     };
 
@@ -798,9 +804,9 @@ export default function Dashboard({
         chartTabelaCID.setFilter(f);
         chartTabelaTipos.setFilter(f);
         chartTabelaAno.setFilter(f);
-        chartPizzaMedicamentos.setFilter(f);
-        chartPizzaDoencas.setFilter(f);
-        chartPizzaDoencasCirurgia.setFilter(f);
+        // chartPizzaMedicamentos.setFilter(f);
+        // chartPizzaDoencas.setFilter(f);
+        // chartPizzaDoencasCirurgia.setFilter(f);
     };
 
     const handleChangeProcurador = selectObject => {

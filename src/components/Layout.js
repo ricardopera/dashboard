@@ -9,7 +9,7 @@ import Page1 from "../pages/Page-1";
 // import Page3 from "./pages/Page-3";
 import Dashboard from "../pages/Dashboard";
 // import NotFound from "./pages/NotFound";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function Layout(props) {
     const [rtl, setRtl] = useState(false);
@@ -103,32 +103,32 @@ function Layout(props) {
 
     return (
         <div className={`app ${toggled ? 'toggled' : ''}`}>
-            <Aside 
-            dark={dark}
-            image={image}
-            collapsed={collapsed}
-            // rtl={rtl}
-            toggled={toggled}
-            handleToggleSidebar={handleToggleSidebar}
-            handleOnMouseEnter={handleOnMouseEnter}
-            handleOnMouseLeave={handleOnMouseLeave}
-            handleImageChange={handleImageChange}
-            handleDarkMode={handleDarkMode}
-            />                
+            <Aside
+                dark={dark}
+                image={image}
+                collapsed={collapsed}
+                // rtl={rtl}
+                toggled={toggled}
+                handleToggleSidebar={handleToggleSidebar}
+                handleOnMouseEnter={handleOnMouseEnter}
+                handleOnMouseLeave={handleOnMouseLeave}
+                handleImageChange={handleImageChange}
+                handleDarkMode={handleDarkMode}
+            />
             {/* <Sidebar history={props.history}/> */}
             <main>
-                
-                    
-                        <Switch>
-                            {/* <Route path="/" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/> */}
-                            <Route path="/dashboard" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/>
-                            <Route path="/page-1" render={(props)=>(<Page1 {...props} dark={dark}/>)}/>
-                            {/* <Route path="/page-2" component={Page2}/>
+
+
+                <Switch>
+                    {/* <Route path="/" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/> */}
+                    <Route path="/dashboard/dashboard" render={(props) => (<Dashboard {...props} dark={dark} />)} />
+                    <Route path="/dashboard/page-1" render={(props) => (<Page1 {...props} dark={dark} />)} />
+                    {/* <Route path="/page-2" component={Page2}/>
                             <Route path="/page-3" component={Page3}/> */}
-                            {/* <Route component={NotFound}/> */}
-                        </Switch>
-                   
-                
+                    {/* <Route component={NotFound}/> */}
+                </Switch>
+
+
             </main>
         </div>
     );
