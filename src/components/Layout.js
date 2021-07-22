@@ -121,7 +121,7 @@ function Layout(props) {
 
 
                 <Switch>
-                    {/* <Route path="/" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/> */}
+                    <Route path="/" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/>
                     <Route path="/dashboard" render={(props) => (<Dashboard {...props} dark={dark} />)} />
                     <Route path="/page-1" render={(props) => (<Page1 {...props} dark={dark} />)} />
                     {/* <Route path="/page-2" component={Page2}/>
