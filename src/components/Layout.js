@@ -123,6 +123,7 @@ function Layout(props) {
                 <Switch>
                     <Route path="/" exact render={(props)=>(<Dashboard {...props} dark={dark}/>)}/>
                     <Route path="/dashboard" exact render={(props) => (<Dashboard {...props} dark={dark} />)} />
+                    <Route path="/form-saude" exact render={(props) => (<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScE2Z3sgh76hgmI-2pAu_-RSZuelifuAE2yzhm45jjMsDzjmw/viewform?embedded=true" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>)} />
                     <Route path="/page-1" exact render={(props) => (<Page1 {...props} dark={dark} />)} />
                     {/* <Route path="/page-2" component={Page2}/>
                             <Route path="/page-3" component={Page3}/> */}

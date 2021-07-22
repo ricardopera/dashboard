@@ -9,7 +9,7 @@ import {
     SidebarFooter,
     SidebarContent,
 } from 'react-pro-sidebar';
-import { FaTachometerAlt, FaStethoscope, FaGem, FaHome, FaList, FaGithub, FaRegLaughWink, FaHeart, FaMoon, FaImage, FaRegImage, FaSun, FaHeartbeat, FaChild } from 'react-icons/fa';
+import { FaChartArea, FaChartBar, FaChartLine, FaRegChartBar, FaChartPie, FaWpforms, FaDigitalTachograph , FaTachometerAlt, FaStethoscope, FaGem, FaHome, FaList, FaGithub, FaRegLaughWink, FaHeart, FaMoon, FaImage, FaRegImage, FaSun, FaHeartbeat, FaChild } from 'react-icons/fa';
 import sidebarBg from '../assets/bg1.jpg';
 import { Link } from "react-router-dom";
 
@@ -39,7 +39,7 @@ const Aside = ({ dark,
             // handleDarkMode={handleDarkMode}
             styles={{ position: 'sticky' }}
         >
-            <SidebarHeader>
+            <SidebarHeader >
                 <div
                     style={{
                         padding: '24px',
@@ -52,9 +52,9 @@ const Aside = ({ dark,
                         whiteSpace: 'nowrap',
                     }}
                 >
+                    {<FaChartBar /> }{' '}
                     {intl.formatMessage({ id: 'sidebarTitle' })}
                     {/* {intl.formatMessage({ id: 'sidebarTitle' })} */}
-                    {/* {' '}{<FaTachometerAlt /> } */}
                 </div>
             </SidebarHeader>
 
@@ -70,17 +70,24 @@ const Aside = ({ dark,
                         // textOverflow: 'ellipsis',
                         // whiteSpace: 'nowrap',
                     }} >
-
-                    <MenuItem
-                        icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
-                        suffix={<span className="badge red">{intl.formatMessage({ id: 'new' })}</span>}
-                    // title={intl.formatMessage({ id: 'dashboard' })}
-                    // key="Dashboard Saúde"
-                    >
-                        <Link to='/dashboard'>{intl.formatMessage({ id: 'health' })}</Link>
-                    </MenuItem>
-
-
+                    <SubMenu title="Saúde" icon={<FaHeartbeat />}>
+                        <MenuItem
+                            icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
+                            suffix={<span className="badge red">{intl.formatMessage({ id: 'new' })}</span>}
+                        // title={intl.formatMessage({ id: 'dashboard' })}
+                        // key="Dashboard Saúde"
+                        >
+                            <Link to='/dashboard'>{<FaChartLine /> }{' '}Dashboard</Link>
+                        </MenuItem>
+                        <MenuItem
+                            icon={<FaChild />}
+                            suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
+                        // key='Page-1'
+                        >
+                            <Link to='/form-saude'>{<FaWpforms /> }{' '}Cadastro</Link>
+                            {/* {intl.formatMessage({ id: 'health' })} */}
+                        </MenuItem>
+                    </SubMenu>
                     <MenuItem
                         icon={<FaChild />}
                         suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
@@ -89,7 +96,6 @@ const Aside = ({ dark,
                         <Link to='/page-1'>Creche</Link>
                         {/* {intl.formatMessage({ id: 'health' })} */}
                     </MenuItem>
-
                     <MenuItem
                         icon={<FaHome />}
                         suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}>
