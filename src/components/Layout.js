@@ -67,6 +67,7 @@ function Layout(props) {
         console.log("mouse leave");
         setCollapsed(true);
     };
+    
     // const handleScroll = () => {
     //     // if {}
     //     // console.log(document.getElementsByClassName('faixa-ano')[0].offsetTop);
@@ -121,8 +122,8 @@ function Layout(props) {
 
                 <Switch>
                     {/* <Route path="/" render={(props)=>(<Dashboard {...props} dark={dark}/>)}/> */}
-                    <Route path="/dashboard/dashboard" render={(props) => (<Dashboard {...props} dark={dark} />)} />
-                    <Route path="/dashboard/page-1" render={(props) => (<Page1 {...props} dark={dark} />)} />
+                    <Route path="/dashboard" render={(props) => (<Dashboard {...props} dark={dark} />)} />
+                    <Route path="/page-1" render={(props) => (<Page1 {...props} dark={dark} />)} />
                     {/* <Route path="/page-2" component={Page2}/>
                             <Route path="/page-3" component={Page3}/> */}
                     {/* <Route component={NotFound}/> */}

@@ -70,26 +70,26 @@ const Aside = ({ dark,
                         // textOverflow: 'ellipsis',
                         // whiteSpace: 'nowrap',
                     }} >
-                    
+
                     <MenuItem
                         icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
                         suffix={<span className="badge red">{intl.formatMessage({ id: 'new' })}</span>}
                     // title={intl.formatMessage({ id: 'dashboard' })}
-                        // key="Dashboard Saúde"
+                    // key="Dashboard Saúde"
                     >
                         <Link to='/dashboard'>{intl.formatMessage({ id: 'health' })}</Link>
                     </MenuItem>
-                    
-                    
+
+
                     <MenuItem
                         icon={<FaChild />}
                         suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
-                        // key='Page-1'
-                        >
+                    // key='Page-1'
+                    >
                         <Link to='/page-1'>Creche</Link>
                         {/* {intl.formatMessage({ id: 'health' })} */}
                     </MenuItem>
-                    
+
                     <MenuItem
                         icon={<FaHome />}
                         suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}>
