@@ -39,7 +39,7 @@ function Routes() {
     // const [dark, setDark] = useState(true);
     return (
         <IntlProvider locale={locale} messages={messages[locale]}>
-            <BrowserRouter forceRefresh={false}>
+            <BrowserRouter forceRefresh={true}>
                 <Layout />
             </BrowserRouter>
         </IntlProvider>
