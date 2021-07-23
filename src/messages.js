@@ -39,7 +39,7 @@ export default {
   },
   pt: {
     title: 'Dashboard dos processos de saúde em trâmite',
-    sidebarTitle: 'Dashboads',
+    sidebarTitle: 'Dashboards',
     description:
       'Processos de saúde em trâmite na procuradoria judicial do Município de Itajaí',
     dashboard: 'Dashboard',

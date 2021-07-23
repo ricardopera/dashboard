@@ -282,6 +282,7 @@ export default function Dashboard({
     const procuradores = [];
     // Similar a componentDidMount e componentDidUpdate:
     useEffect(() => {
+        document.title = "Dashboard Saúde";
         if (dark !== dk) {
             setDk(dark);
             console.log(dark);
