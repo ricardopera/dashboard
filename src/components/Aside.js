@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import {
     ProSidebar,
@@ -12,6 +12,42 @@ import {
 import { FaSignOutAlt, FaSignInAlt, FaChartArea, FaChartBar, FaChartLine, FaRegChartBar, FaChartPie, FaWpforms, FaDigitalTachograph, FaTachometerAlt, FaStethoscope, FaGem, FaHome, FaList, FaGithub, FaRegLaughWink, FaHeart, FaMoon, FaImage, FaRegImage, FaSun, FaHeartbeat, FaChild } from 'react-icons/fa';
 import sidebarBg from '../assets/bg1.jpg';
 import { Link } from "react-router-dom";
+import { client } from "../pages/login/Login";
+import ChartsEmbedSDK, { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
+
+const AuthContent = ({ children }) => {
+    // const [logged, setLogged] = useState(false);
+    // useEffect(() => {
+    //     client.isAuthenticated;
+    // })
+    var logged = null;
+    setTimeout(function(){
+        const adff = false;
+    }, 5000); 
+    logged = client.auth.isLoggedIn;//getRealmUserToken(client);
+    return logged ? children : <LoginMenuItem />;
+
+};
+
+const LoginMenuItem = () => {
+    const intl = useIntl();
+    return (
+        <MenuItem
+            icon={<FaSignInAlt />}
+            suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
+        // key='Page-1'
+        >
+            <Link to='/login'>Login</Link>
+            {/* {intl.formatMessage({ id: 'health' })} */}
+        </MenuItem>
+    );
+};
+
+// const AuthMenuItens = () => {
+//     return (
+
+//     );
+// };
 
 const Aside = ({ dark,
     image,
@@ -57,7 +93,6 @@ const Aside = ({ dark,
                     {/* {intl.formatMessage({ id: 'sidebarTitle' })} */}
                 </div>
             </SidebarHeader>
-
             <SidebarContent>
                 <Menu iconShape="circle"
                     style={{
@@ -70,46 +105,41 @@ const Aside = ({ dark,
                         // textOverflow: 'ellipsis',
                         // whiteSpace: 'nowrap',
                     }} >
-                    <MenuItem
-                        icon={<FaSignInAlt />}
-                        suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
-                    // key='Page-1'
-                    >
-                        <Link to='/login'>Login</Link>
-                        {/* {intl.formatMessage({ id: 'health' })} */}
-                    </MenuItem>
-                    <SubMenu title="Saúde" icon={<FaHeartbeat />}>
-                        <MenuItem
-                            icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
-                            suffix={<span className="badge red">{intl.formatMessage({ id: 'new' })}</span>}
-                        // title={intl.formatMessage({ id: 'dashboard' })}
-                        // key="Dashboard Saúde"
-                        >
-                            <Link to='/dashboard'>{<FaChartLine />}{' '}Dashboard</Link>
-                        </MenuItem>
+                    <AuthContent>
+
+                        <SubMenu title="Saúde" icon={<FaHeartbeat />}>
+                            <MenuItem
+                                icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
+                                suffix={<span className="badge red">{intl.formatMessage({ id: 'new' })}</span>}
+                            // title={intl.formatMessage({ id: 'dashboard' })}
+                            // key="Dashboard Saúde"
+                            >
+                                <Link to='/dashboard'>{<FaChartLine />}{' '}Dashboard</Link>
+                            </MenuItem>
+                            <MenuItem
+                                icon={<FaChild />}
+                                suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
+                            // key='Page-1'
+                            >
+                                <Link to='/form-saude'>{<FaWpforms />}{' '}Cadastro</Link>
+                                {/* {intl.formatMessage({ id: 'health' })} */}
+                            </MenuItem>
+                        </SubMenu>
                         <MenuItem
                             icon={<FaChild />}
                             suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
                         // key='Page-1'
                         >
-                            <Link to='/form-saude'>{<FaWpforms />}{' '}Cadastro</Link>
+                            <Link to='/page-1'>Creche</Link>
                             {/* {intl.formatMessage({ id: 'health' })} */}
                         </MenuItem>
-                    </SubMenu>
-                    <MenuItem
-                        icon={<FaChild />}
-                        suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}
-                    // key='Page-1'
-                    >
-                        <Link to='/page-1'>Creche</Link>
-                        {/* {intl.formatMessage({ id: 'health' })} */}
-                    </MenuItem>
-                    <MenuItem
-                        icon={<FaHome />}
-                        suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}>
-                        Usucapião
-                        {/* {intl.formatMessage({ id: 'health' })} */}
-                    </MenuItem>
+                        <MenuItem
+                            icon={<FaHome />}
+                            suffix={<span className="badge red" >{intl.formatMessage({ id: 'new' })}</span>}>
+                            Usucapião
+                            {/* {intl.formatMessage({ id: 'health' })} */}
+                        </MenuItem>
+                    </AuthContent>
                 </Menu>
 
                 <Menu iconShape="circle">

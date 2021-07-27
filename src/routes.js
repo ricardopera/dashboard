@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Page1 from "./pages/Page-1";
 // import Page2 from "./pages/Page-2";
 // import Page3 from "./pages/Page-3";
@@ -34,14 +34,22 @@ import './styles/App.scss';
 //     )
 // }
 
+// const Teste = ({ children }) => {
+//     // Only render children if there is a logged in user.
+//     const app = true;
+//     return app ? children : <Page1 />;
+// };
+
 function Routes() {
     const [locale, setLocale] = useState('pt');
     // const [dark, setDark] = useState(true);
     return (
         <IntlProvider locale={locale} messages={messages[locale]}>
+            {/* <Teste> */}
             <BrowserRouter forceRefresh={true}>
                 <Layout />
             </BrowserRouter>
+            {/* </Teste> */}
         </IntlProvider>
     )
 }

@@ -1,9 +1,11 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
 import Select from "react-select";
 // import PrettySlider from "./PrettySlider";
-import ChartsEmbedSDK from "@mongodb-js/charts-embed-dom";
+import ChartsEmbedSDK, { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
+import { client } from "./login/Login";
 import { FaBars, FaHeartbeat } from 'react-icons/fa';
 import { useIntl } from 'react-intl';
+import { getToken } from '../services/auth';
 
 var tema = "light";
 
@@ -13,6 +15,7 @@ export var options_filters = [{ label: 'Ovo', value: 'Ovo' }, { label: 'Jaca', v
 
 const sdk = new ChartsEmbedSDK({
     baseUrl: "https://charts.mongodb.com/charts-saude-ualvx", // Optional: ~REPLACE~ with the Base URL from your Embed Chart dialog
+    getUserToken: () => getRealmUserToken(client),
 });
 export const chart1 = sdk.createChart({
     chartId: "147fe4a4-cd35-462c-aa79-8925840b30d4", // Optional: ~REPLACE~ with the Chart ID from your Embed Chart dialog
