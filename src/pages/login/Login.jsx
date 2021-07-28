@@ -3,20 +3,28 @@ import { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
 import { Link, withRouter } from "react-router-dom";
 import { Stitch, UserPasswordCredential } from 'mongodb-stitch-browser-sdk';
 import { Form, Container } from "./styles";
-import Logo from "../../logo-itajai-2019-cortado.ico"
+import Logo from "../../logo-itajai-2019-cortado.ico";
 import { login, isAuthenticated, getToken } from "../../services/auth";
 
 //engmec.ricardopereira@gmail.com
 
 export const client = Stitch.initializeAppClient('saudecharts-eabok',);
+export var logged = false;
 
-async function tryLogin(email, password) {
+async function tryLogin(email, password, props) {
     const credential = new UserPasswordCredential(email, password);
+    console.log('AUTH 1 ==>>', client.auth.isLoggedIn);
     client.auth.loginWithCredential(credential).then(() => {
+        console.log('AUTH 2 ==>>', client.auth.isLoggedIn);
+        logged = true;
         // login(JSON.stringify(getRealmUserToken(client)));
         console.log('TOKEN', getRealmUserToken(client));
+        login("client.auth.isLoggedIn");
+        console.log("LOGGED:", isAuthenticated());
+        props.history.push("/dashboard");
         // console.log('TOKEN2', JSON.parse(getToken()));
     });
+    console.log('AUTH 3 ==>>', client.auth.isLoggedIn);
 };
 
 function Login(props) {
@@ -36,15 +44,16 @@ function Login(props) {
         } else {
             console.log('Email and Password', email, password);
             try {
-                tryLogin(email, password);
+                tryLogin(email, password, props);
                 // const credential = new UserPasswordCredential(email, password);
                 // const client = Stitch.initializeAppClient('saudecharts-eabok',); // Optional: ~REPLACE~ with your Realm App ID
-                // console.log('clent auth:', client.auth.loginWithCredential(credential).then());
+                // console.log('client auth:', client.auth.loginWithCredential(credential).then());
                 // console.log('token:', getRealmUserToken(client));
-                // // const response = await api.post("/sessions", { email, password });
+                // logged = true;
+                // props.history.push("/dashboard");
+                // const response = await api.post("/sessions", { email, password });
                 // // login(response.data.token);
-                props.history.push("/dashboard");
-                // if (isAuthenticated()) {
+                // if (getRealmUserToken(client)){//(isAuthenticated()) {
                 //     console.log('debug 1');
                 // }
                 // else {
@@ -73,7 +82,7 @@ function Login(props) {
                 />
                 <button type="submit">Entrar</button>
                 <hr />
-                <Link to="/page-1">Criar conta grátis</Link>
+                <Link to="/page-1">Page1</Link>
             </Form>
         </Container>
     );

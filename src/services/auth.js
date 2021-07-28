@@ -1,9 +1,11 @@
+import { client, logged } from "../pages/login/Login";
 export const TOKEN_KEY = "@realm-Token";
-export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
+export const isAuthenticated = () => window.localStorage.getItem(TOKEN_KEY);
+export const getToken = () => window.localStorage.getItem(TOKEN_KEY);
 export const login = token => {
-  localStorage.setItem(TOKEN_KEY, token);
+  window.localStorage.setItem(TOKEN_KEY, token);
 };
 export const logout = () => {
-  localStorage.removeItem(TOKEN_KEY);
+  client.auth.logout()
+  window.localStorage.removeItem(TOKEN_KEY);
 };

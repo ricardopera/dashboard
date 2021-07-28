@@ -12,21 +12,27 @@ import {
 import { FaSignOutAlt, FaSignInAlt, FaChartArea, FaChartBar, FaChartLine, FaRegChartBar, FaChartPie, FaWpforms, FaDigitalTachograph, FaTachometerAlt, FaStethoscope, FaGem, FaHome, FaList, FaGithub, FaRegLaughWink, FaHeart, FaMoon, FaImage, FaRegImage, FaSun, FaHeartbeat, FaChild } from 'react-icons/fa';
 import sidebarBg from '../assets/bg1.jpg';
 import { Link } from "react-router-dom";
-import { client } from "../pages/login/Login";
-import ChartsEmbedSDK, { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
+import { client, logged } from "../pages/login/Login";
+// import ChartsEmbedSDK, { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
+import { login, isAuthenticated, getToken, logout } from "../services/auth";
 
-const AuthContent = ({ children }) => {
+const AuthContent = ({ children, log }) => {
+    console.log("LOGGED SIDEBAR:", isAuthenticated());
+    // console.log('AUTH ==>>', client.auth.isLoggedIn);
     // const [logged, setLogged] = useState(false);
     // useEffect(() => {
     //     client.isAuthenticated;
     // })
-    var logged = null;
-    setTimeout(function(){
-        const adff = false;
-    }, 5000); 
-    logged = client.auth.isLoggedIn;//getRealmUserToken(client);
-    return logged ? children : <LoginMenuItem />;
-
+    // var token = null;
+    // // var logged = false;
+    // try {
+    //     token = getRealmUserToken(client);//client.auth.isLoggedIn;//getRealmUserToken(client);
+    //     logged = true;
+    // }
+    // catch (err){
+    //     logged = false;
+    // }
+    return isAuthenticated() ? children : <LoginMenuItem />;
 };
 
 const LoginMenuItem = () => {
@@ -58,7 +64,8 @@ const Aside = ({ dark,
     handleOnMouseEnter,
     handleOnMouseLeave,
     handleImageChange,
-    handleDarkMode
+    handleDarkMode,
+    logged
 }) => {
     const intl = useIntl();
     return (
@@ -105,8 +112,13 @@ const Aside = ({ dark,
                         // textOverflow: 'ellipsis',
                         // whiteSpace: 'nowrap',
                     }} >
-                    <AuthContent>
-
+                    <AuthContent log={logged}>
+                        <MenuItem
+                            icon={<FaSignOutAlt />}
+                            onClick={() => {logout()}}
+                        >
+                            <Link to='/login'>Logout</Link>
+                        </MenuItem>
                         <SubMenu title="Saúde" icon={<FaHeartbeat />}>
                             <MenuItem
                                 icon={<FaHeartbeat />}//{<FaStethoscope />}//{<FaHeartbeat />}//{<FaTachometerAlt />}
