@@ -1,0 +1,16 @@
+{
+    "collection": "processo",
+    "database": "procs-tudo-3",
+    "roles": [
+        {
+            "name": "default",
+            "apply_when": {},
+            "read": true,
+            "write": false,
+            "insert": false,
+            "delete": false,
+            "search": true,
+            "additional_fields": {}
+        }
+    ]
+}
