@@ -1,6 +1,6 @@
 {
     "enabled": true,
     "app_default_domain": "saudecharts-eabok.mongodbstitch.com",
-    "default_error_path": "/index.html",
-    "default_error_code": "200"
+    "default_error_path": "",
+    "default_error_code": ""
 }
