@@ -1,11 +1,13 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
 import Select from "react-select";
+import AsyncSelect from 'react-select/async';
 // import PrettySlider from "./PrettySlider";
 import ChartsEmbedSDK, { getRealmUserToken } from "@mongodb-js/charts-embed-dom";
 import { client } from "./login/Login";
 import { FaBars, FaHeartbeat } from 'react-icons/fa';
 import { useIntl } from 'react-intl';
 import { getToken } from '../services/auth';
+import http from "../services/http-common";
 
 var tema = "light";
 
@@ -148,6 +150,11 @@ export default function Dashboard({
     const [filterProcurador, setFilterProcurador] = useState({});
     const [filterCid, setFilterCid] = useState({});
     const [filterMed, setFilterMed] = useState({});
+    const [procuradores, setProcuradores] = useState([]);
+
+    
+
+
     const anos = [
         {
             value: "",
@@ -282,7 +289,31 @@ export default function Dashboard({
             label: "Não determinado"
         }
     ];
-    const procuradores = [];
+    // const getProcs = (http.get('/procuradores').then(res => {res.date}) => ({
+    //     return res.data.map(procurador => {
+    //         return {
+    //             value: procurador,
+    //             label: procurador
+    //         }
+    //     })
+    // });
+    // let procs = http.get('/procuradores').map(res => res.data);
+
+    // async function getProcs() {
+    //     try {
+    //       const response = await http.get('/procuradores');
+    //     //   return response.data.map(procurador => {procurador});
+    //       console.log(response.data.map(procurador => {procurador}));
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    //   }
+
+    // const setProcuradores = async () => {
+        
+    //  .map((proc) => ({value: proc, label: proc}));
+
+
     // Similar a componentDidMount e componentDidUpdate:
     useEffect(() => {
         document.title = "Dashboard Saúde";
@@ -813,8 +844,59 @@ export default function Dashboard({
         // chartPizzaDoencasCirurgia.setFilter(f);
     };
 
-    const handleChangeProcurador = selectObject => {
-        let query = [];
+    // async function handleChangeProcurador = selectObject => {
+    //     let query = [];
+    //     let procuradores = await http.get('/procuradores').then(response)
+        
+    //     // .then(res => {
+    //     //     // console.log('procuradores: ', res.data);
+    //     //     // res.data.map((d) => d);
+            
+    //     // })
+    //     // console.log('query: ', query);
+    //     console.log(procuradores)
+    //     // console.log(http.get('/procuradores').map(res => res.data));
+    // };
+
+    async function handleChangeProcurador() {
+        try {
+          const response = await http.get('/procuradores');
+        //   setProcuradores(response.data);
+          let procur = [];
+                response.data.forEach(function ( d ) { procur.push({value: d, label: d})});    
+            setProcuradores(procur);
+            console.log(response.data);
+            return procur;
+          console.log('procuradores: ', procuradores);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    
+    // mapOptionsToValues = options => {
+    //   return options.map(option => ({
+    //     value: option,
+    //     label: option
+    //   }));
+    // };
+  
+    async function getOptions (inputValue, callback) {
+    //   if (!inputValue) {
+    //     return callback([]);
+    //   }
+  
+    //   const { searchApiUrl } = this.props;
+    //   const limit =
+    //     this.props.limit || process.env['REACT_APP_DROPDOWN_ITEMS_LIMIT'] || 5;
+    //   const queryAdder = searchApiUrl.indexOf('?') === -1 ? '?' : '&';
+    //   const fetchURL = `${searchApiUrl}${queryAdder}search=${inputValue}&limit=${limit}`;
+        console.log("sdafsdfsdfsdfsdf")
+      await http.get('/procuradores').then(response => {
+            let procur = [];
+            const results = response.data.forEach(function ( d ) { procur.push({value: d, label: d})});
+            console.log(results);
+            callback(results);
+        });
     };
 
     return (
@@ -865,18 +947,22 @@ export default function Dashboard({
                                         isMulti
                                         placeholder="Selecione o ano"
                                         options={tipoSolicitacoes}
-                                        onChange={handleChangeTipoSolicitacao}
+                                        // onChange={handleChangeTipoSolicitacao}
+                                        onChange={handleChangeProcurador}
                                     />
                                 </div>
                             </div>
                             <div style={{ display: 'flex' }}>
                                 <h4 style={{ width: '45%' }}>Procurador{' '}</h4>
                                 <div style={{ width: '100%' }}>
-                                    <Select className="ano" id="filtro-ano"
+                                    <AsyncSelect className="ano" id="filtro-ano"
                                         isMulti
                                         placeholder="Selecione o tribunal"
-                                        options={tribunais}
+                                        // options={procuradores}
                                         onChange={handleChangeProcurador}
+                                        loadOptions={getOptions}
+                                        // onClick={handleChangeProcurador}
+                                        // onLoad={handleChangeProcurador}
                                     />
                                 </div>
                             </div>
