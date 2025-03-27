@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Dashboard de Processos de Saúde - Prefeitura de Itajaí
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Um dashboard interativo para visualização e análise de processos de saúde em trâmite na procuradoria judicial do Município de Itajaí.
 
-## Available Scripts
+![Dashboard Preview](./src/assets/health.jpg)
 
-In the project directory, you can run:
+## Sobre o Projeto
 
-### `yarn start`
+Este aplicativo foi desenvolvido para auxiliar a Procuradoria Judicial do Município de Itajaí na visualização, análise e gestão dos processos judiciais relacionados à saúde. A ferramenta permite filtrar e visualizar dados sobre processos por ano, tribunal, tipo de solicitação, procurador responsável, CID e outros parâmetros relevantes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Principais Funcionalidades
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Visualização de dados estatísticos** através de diversos gráficos interativos
+- **Filtragem múltipla** por ano, tribunal, tipo de solicitação e procurador
+- **Análise detalhada** de processos por CID, tipo de solicitação e valores
+- **Modo claro/escuro** para melhor experiência visual
+- **Suporte a múltiplos idiomas** (português e inglês)
+- **Visualização de tabelas detalhadas** com informações processuais
+- **Dashboard responsivo** adaptável a diferentes dispositivos
 
-### `yarn test`
+## Tecnologias Utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- React.js
+- MongoDB Charts para visualização de dados
+- React Router para navegação
+- React Select para componentes de seleção avançados
+- React Icons para iconografia
+- React Intl para internacionalização
+- MongoDB Realm para autenticação e backend
 
-### `yarn build`
+## Instalação e Execução
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Pré-requisitos
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js (versão 12 ou superior)
+- Yarn ou npm
+- Acesso ao MongoDB Atlas (para dados e gráficos)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Configuração
 
-### `yarn eject`
+1. Clone o repositório:
+   ```
+   git clone https://github.com/seu-usuario/dashboard-saude-itajai.git
+   cd dashboard-saude-itajai
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Instale as dependências:
+   ```
+   yarn install
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Configure as variáveis de ambiente (crie um arquivo .env na raiz do projeto):
+   ```
+   REACT_APP_MONGODB_CHARTS_URL=sua_url_do_mongodb_charts
+   REACT_APP_REALM_APP_ID=seu_realm_app_id
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Execução
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+yarn start
+```
 
-## Learn More
+O aplicativo estará disponível em [http://localhost:3000](http://localhost:3000).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Build para Produção
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+yarn build
+```
 
-### Code Splitting
+Os arquivos otimizados para produção serão gerados na pasta `build`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Estrutura do Projeto
 
-### Analyzing the Bundle Size
+- `/src/components` - Componentes reutilizáveis
+- `/src/pages` - Páginas principais da aplicação
+- `/src/services` - Serviços para API e autenticação
+- `/src/assets` - Recursos estáticos (imagens, ícones)
+- `/src/styles` - Arquivos de estilo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Autores
 
-### Making a Progressive Web App
+- Ricardo Pereira - Desenvolvimento e implementação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Licença
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Este projeto é propriedade da Prefeitura Municipal de Itajaí.
